@@ -7,7 +7,7 @@ module.exports = {
 		'prettier'
 	],
 	parser: '@typescript-eslint/parser',
-	plugins: ['@typescript-eslint'],
+	plugins: ['eslint-plugin-simple-import-sort','eslint-plugin-unused-imports','@typescript-eslint'],
 	parserOptions: {
 		sourceType: 'module',
 		ecmaVersion: 2020,
@@ -18,6 +18,7 @@ module.exports = {
 		es2017: true,
 		node: true
 	},
+	ignorePatterns: ['*.cjs'],
 	overrides: [
 		{
 			files: ['*.svelte'],
