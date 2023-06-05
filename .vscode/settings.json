@@ -70,16 +70,13 @@
   },
   "search.exclude": {
     "**/node_modules": true,
-    "**/bower_components": true,
     "**/*.code-search": true,
     "/proc/**/*": true,
-    "./common/temp": true,
     "**build*": true,
     "**/lib": true,
     "**rush": true,
     "**dist": true,
-    "**/*.svelte-kit": true,
-    "**/*.macula": true
+    "**/*.svelte-kit": true
   },
   "zenMode.hideTabs": false,
   "zenMode.fullScreen": false,

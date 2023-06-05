@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { imageProcessingBaseUrl } from '$src/appStore';
+  import { imageProcessingBaseUrl, makeIpfsLinkForUrn } from '$src/appStore';
   import type { Photo } from '$src/types';
   import { onMount } from 'svelte';
 
@@ -23,7 +23,7 @@
 </script>
 
 <img
-  src="{imageProcessingBaseUrl}/ipfs/{image.renditions['600'].split(':')[2]}?fit=cover"
+  src={makeIpfsLinkForUrn(image.renditions['600'])}
   loading="lazy"
   style="padding-bottom:{image.renditions.height /
     (image.renditions.width * 100)}%; width:{calculatedWidth}px; flex-grow:{calculatedWidth};
