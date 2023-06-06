@@ -25,3 +25,28 @@ export interface Renditions {
   width: number;
   height: number;
 }
+
+export interface IPhotoRendition {
+  /**
+   * Anagolay Workflow CID
+   */
+  cid: string;
+  ipfsCid: string;
+  height: number;
+  width: number;
+  mime: string;
+}
+
+export interface IPhotoModel {
+  /**
+   * Anagolay Workflow CID
+   */
+  cid: string;
+  ipfsCid: string;
+  metadataCid: string;
+  metadata: Record<string, unknown>;
+  renditions: IPhotoRendition[];
+  createdAt: number;
+  height: number;
+  width: number;
+}

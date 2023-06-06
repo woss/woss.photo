@@ -13,8 +13,9 @@
       <label tabindex="0" class="btn btn-ghost btn-circle avatar">
         <div class="w-10 rounded-full">
           <img
-            src="{imageProcessingBaseUrl}/ipfs/bafybeig4k7sjcqwswcdlrepi6ohqhdchyrb6k3klmasijghqkimtyiqkeq"
+            src="{imageProcessingBaseUrl}/ipfs/bafybeig4k7sjcqwswcdlrepi6ohqhdchyrb6k3klmasijghqkimtyiqkeq?w=60&q=80&f=jpeg"
             alt="Woss avatar"
+            loading="lazy"
           />
         </div>
       </label>

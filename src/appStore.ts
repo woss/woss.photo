@@ -9,29 +9,51 @@ export const defaultIpfsGateway = dev ? 'https://ipfs.macula.localhost' : 'https
 
 export const hostingUrl = dev ? 'https://api.macula.localhost' : 'https://api.macula.link';
 
+export function makeIpfsItemUrl(cidOrPath: string): URL {
+  const u = new URL(`${imageProcessingBaseUrl}/ipfs/${cidOrPath}`);
+  return u;
+}
+
 /**
  *
  * @param urn - `urn:PROVIDER:CID`
+ * @param params - URLSearchParams which will be added to the URL
  * @returns
  */
-export function makeIpfsLinkForUrn(urn: string): string {
-  const [, provider, cid] = split(':', urn);
+export function makeIpfsLinkForUrn(urn: string, params?: Record<string, string>): URL {
+  const [, provider, cidFromArray] = split(':', urn);
+
+  let cid = cidFromArray;
+
   let ipfsGateway = defaultIpfsGateway;
-  if (equals('kelp', provider)) {
-    ipfsGateway = defaultIpfsGateway;
+
+  if (equals('ipfs', provider)) {
+    ipfsGateway = imageProcessingBaseUrl;
   } else {
-    throw new Error(`provider ${provider} not found`);
+    console.debug('got unknown provider, using image macula');
+    ipfsGateway = imageProcessingBaseUrl;
+    cid = urn;
   }
 
   const u = new URL(`${ipfsGateway}/ipfs/${cid}`);
 
-  return u.toString();
+  if (params) {
+    u.search = new URLSearchParams(params).toString();
+  }
+
+  return u;
+}
+
+export function maculaImageInfoUrl(cid: string): URL {
+  const u = new URL(`${imageProcessingBaseUrl}/photo/${cid}`);
+  console.log('u', u);
+  return u;
 }
 
 export const albums = {
   home: {
     name: 'Home page album',
-    cid: '647dbc5f00597505a2e78c14'
-    // cid: '647cd0e9621688e9a1dab816'
+    cid: '647e748c0e16b0889158a5ab'
+    // cid: '647e744b366a6d6770bbc9fc'
   }
 };
