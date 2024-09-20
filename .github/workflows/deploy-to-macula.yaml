@@ -1,0 +1,110 @@
+name: deploy-to-macula
+on:
+  workflow_dispatch:
+    inputs:
+      env:
+        description: 'To which env to deploy. This equals the NODE_ENV variable.'
+        type: choice
+        default: 'staging'
+        required: true
+        options:
+          - staging
+          - production
+jobs:
+  build:
+    name: build and deploy
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x]
+    env:
+      NODE_NO_WARNINGS: 1
+      BROWSERSLIST_IGNORE_OLD_DATA: 1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+          fetch-depth: 0
+
+      - run: corepack enable
+
+      - name: Download ipfsCli
+        run: |
+          echo "Downloading anagolay ipfs CLI which works with the ipfsAuthProxy."
+          curl https://ipfs.macula.link/ipfs/bafybeig634knkl57gqgkmh3fti6zxisfcd47swetf5lastcx2waboa4a4a  > /usr/local/bin/ipfsCli
+          chmod +x /usr/local/bin/ipfsCli
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Pnpm Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Build App
+        env:
+          VITE_SENTRY_RELEASE_VERSION: ${{github.sha}}
+          NODE_ENV: ${{inputs.env}}
+        run: pnpm build
+
+      - name: Upload Source Maps to Sentry
+        env:
+          SENTRY_LOG_LEVEL: ${{ secrets.SENTRY_LOG_LEVEL }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_URL: ${{ secrets.SENTRY_URL }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_RELEASE_VERSION: ${{inputs.env}}-${{github.sha}}
+          SENTRY_PROJECT: woss-photo
+          NODE_ENV: ${{inputs.env}}
+        run: pnpm sentry
+
+      - name: Upload woss-photo to Macula
+        env:
+          AN_IPFS_API_URL: ${{ secrets.AN_IPFS_API_URL }}
+          AN_IPFS_API_KEY: ${{ secrets.AN_IPFS_API_KEY }}
+        run: ipfsCli add --onlyCid ./build > woss_photo_cid
+
+      - name: Create build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: woss_photo_cid
+          path: woss_photo_cid
+          retention-days: 1
+
+      - name: Deployed URL
+        run: echo "https://$(cat woss_photo_cid).ipfs.macula.link"
+
+      - name: Publish to Macula Hosting
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { readFile } = require('node:fs/promises');
+            const { resolve } = require('node:path');
+            const filePath = resolve('./woss_photo_cid')
+            const contents = await readFile(filePath, { encoding: 'utf8' });
+            const cid = contents.toString();
+            const l = cid.length;
+
+            const firstChars = cid.substring(0,7);
+            const lastChars = cid.substring(l-7,l);
+            const full = `${firstChars}...${lastChars}`
+
+            let hostingUrl = '';
+
+            if('${{inputs.env}}' === 'production') {
+              hostingUrl = 'https://api.macula.link/hosting';
+            } else {
+              hostingUrl = 'https://api.stg.macula.link/hosting';
+            }
+
+            let pkgSlug = 'woss-photo';
+
+            const response = await fetch(hostingUrl, {
+              method: 'post',
+            body: JSON.stringify({slug:pkgSlug, ipfsCid: cid.trim()}),
+              headers: {'Content-Type': 'application/json','api-key':'${{ secrets.ACCEPT_HOSTING_API_KEY }}'}
+            });
+            const data = await response.json();
+            console.log('data', data)

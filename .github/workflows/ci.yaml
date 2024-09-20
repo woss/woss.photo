@@ -1,0 +1,38 @@
+name: ci
+
+on:
+  merge_group:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    name: build and deploy
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x]
+    env:
+      NODE_NO_WARNINGS: 1
+      BROWSERSLIST_IGNORE_OLD_DATA: 1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+          fetch-depth: 0
+
+      - run: corepack enable
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Pnpm Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
