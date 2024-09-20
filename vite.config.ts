@@ -1,5 +1,6 @@
 // import 'vite/modulepreload-polyfill';
 
+// import { sentrySvelteKit } from '@sentry/sveltekit';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { resolve } from 'node:path';
 import { createLogger, defineConfig, type UserConfig } from 'vite';
@@ -19,7 +20,18 @@ logger.warn = (msg, options) => {
 const config: UserConfig = {
   customLogger: logger,
   // logLevel: 'info',
-  plugins: [topLevelAwait(), sveltekit()],
+  plugins: [
+    topLevelAwait(),
+    // sentrySvelteKit({
+    //   sourceMapsUploadOptions: {
+    //     org: 'kelp',
+    //     project: 'woss-photo',
+    //     url: 'https://sentry.kelp.digital/'
+    //   }
+    // }),
+
+    sveltekit()
+  ],
   resolve: {
     alias: {
       $src: resolve('./src')

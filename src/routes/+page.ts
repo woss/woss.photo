@@ -24,18 +24,16 @@ export async function load({ fetch, parent }) {
       },
       fetch
     );
-
-    console.log('d', d);
-    // photos = d.data.files;
+    photos = d.data.files;
 
     return {
       dir: wossPublishedDir,
-      photos: [],
+      photos,
       take,
       page: d.nextPage
     };
   } catch (e) {
     console.log('e', e);
-    error(400, { message: e.message, status: e.status });
+    error(400, e as any);
   }
 }

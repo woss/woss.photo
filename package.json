@@ -16,7 +16,8 @@
     "test:unit": "vitest",
     "lint": "eslint src --config eslint.config.js --cache --cache-strategy content --quiet",
     "lint:prettier": "prettier --plugin-search-dir . --check .",
-    "format": "prettier --plugin-search-dir . --write ."
+    "format": "prettier --plugin-search-dir . --write .",
+    "sentry": "bash ./sentryUpload.sh"
   },
   "type": "module",
   "dependencies": {
@@ -70,5 +71,6 @@
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint && pnpm pretty-quick --staged"
-  }
+  },
+  "packageManager": "pnpm@9.6.0"
 }

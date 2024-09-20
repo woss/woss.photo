@@ -243,11 +243,17 @@ export class MaculaPublicApi {
    * Url string without the `/` at the end
    */
   baseUrl: string;
-  constructor(username: string, baseUrl: string = 'https://u.macula.link') {
+  ipfsBaseUrl: string;
+  constructor(
+    username: string,
+    baseUrl: string = 'https://u.macula.link',
+    ipfsBaseUrl: string = 'https://gw.macula.link'
+  ) {
     this.username = `@${username}`;
     this.baseUrl = baseUrl;
     this.userBaseUrl = `${this.baseUrl}/${this.username}`;
     this.userJSONUrl = `${this.baseUrl}/${this.username}.json`;
+    this.ipfsBaseUrl = ipfsBaseUrl;
   }
 
   static async init(username: string) {
@@ -260,7 +266,7 @@ export class MaculaPublicApi {
    * @returns
    */
   public makeIpfsUrl(cidOrPath: string): URL {
-    const u = new URL(`${this.baseUrl}/ipfs/${cidOrPath}`);
+    const u = new URL(`${this.ipfsBaseUrl}/ipfs/${cidOrPath}`);
     return u;
   }
 

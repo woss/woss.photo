@@ -26,13 +26,13 @@ jobs:
           lfs: true
           fetch-depth: 0
 
+      - run: corepack enable
+
       - name: Download ipfsCli
         run: |
           echo "Downloading anagolay ipfs CLI which works with the ipfsAuthProxy."
           curl https://ipfs.macula.link/ipfs/bafybeig634knkl57gqgkmh3fti6zxisfcd47swetf5lastcx2waboa4a4a  > /usr/local/bin/ipfsCli
           chmod +x /usr/local/bin/ipfsCli
-
-      - run: corepack enable
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
@@ -56,11 +56,11 @@ jobs:
           SENTRY_URL: ${{ secrets.SENTRY_URL }}
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
           SENTRY_RELEASE_VERSION: ${{inputs.env}}-${{github.sha}}
-          SENTRY_PROJECT: macula-${{inputs.package}}
+          SENTRY_PROJECT: woss-photo
           NODE_ENV: ${{inputs.env}}
-        run: node common/scripts/install-run-rush.js sentry --to @kelp_digital/macula_${{inputs.package}}
+        run: pnpm sentry
 
-      - name: Upload ${{inputs.package}} to Macula
+      - name: Upload woss-photo to Macula
         env:
           AN_IPFS_API_URL: ${{ secrets.AN_IPFS_API_URL }}
           AN_IPFS_API_KEY: ${{ secrets.AN_IPFS_API_KEY }}
