@@ -59,6 +59,7 @@
     "sveltekit",
     "tailwindcss",
     "transpiling",
+    "Unilink",
     "WAAT"
   ],
   "workbench.colorCustomizations": {

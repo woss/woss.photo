@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { makeIpfsUrl } from '$src/appStore';
+  import { maculaInstance } from '$src/appStore';
   import type { Me } from '$src/maculaApi';
   import type { Static } from '@sinclair/typebox';
   import { fade } from 'svelte/transition';
 
   export let data: Static<typeof Me>;
-  let avatar = makeIpfsUrl(data.avatar).toString();
+  let avatar = maculaInstance.makeIpfsUrl(data.avatar).toString();
 </script>
 
 <div class="navbar bg-base-100 shadow-xl rounded-box">

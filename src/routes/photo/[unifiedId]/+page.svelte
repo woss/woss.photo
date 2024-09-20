@@ -1,15 +1,12 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import { maculaInstance, makeIpfsUrl } from '$src/appStore';
+  import { maculaInstance } from '$src/appStore';
   import { fade } from 'svelte/transition';
   import type { PageData } from './$types';
 
   export let data: PageData;
-
   let src: string = maculaInstance.makeUnifiedRawLink(`${$page.params.unifiedId}`);
-  let preloadBlurredImage = makeIpfsUrl(
-    data.info.cachedRenditions.find((x) => x.presetName === 'blur').ipfsCid
-  );
+  let preloadBlurredImage = maculaInstance.makePresetUrl($page.params.unifiedId, 'blur').toString();
   let containerWidth = 0;
   let containerHeight = 0;
 
@@ -34,7 +31,7 @@
       <div class="flex items-center justify-center">
         <div style={data.info.imageOrientation === 'vertical' ? 'max-height=80vh; height:80vh;' : ''}>
           <img
-            srcset="{src}?w=800 800w, {src}?w=2000 1000w"
+            srcset="{src}?preset=sys_md 800w, {src}?preset=sys_xl 1000w"
             sizes="(min-width: 800px) 80vw, 100vw"
             src="{src}?w=600"
             class="object-contain"
