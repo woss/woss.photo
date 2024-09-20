@@ -4,6 +4,9 @@ set -ex
 
 VERSION="$SENTRY_RELEASE_VERSION"
 
+echo "Uploading source maps for version: $VERSION"
+echo "URL is $SENTRY_URL"
+
 # Create a release
 sentry-cli releases new -p "$SENTRY_PROJECT" "$VERSION"
 

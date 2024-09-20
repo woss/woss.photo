@@ -45,20 +45,20 @@ jobs:
 
       - name: Build App
         env:
-          VITE_SENTRY_RELEASE_VERSION: ${{github.sha}}
+          VITE_SENTRY_RELEASE_VERSION: ${{inputs.env}}-${{github.sha}}
           NODE_ENV: ${{inputs.env}}
         run: pnpm build
 
       - name: Upload Source Maps to Sentry
         env:
-          SENTRY_LOG_LEVEL: ${{ secrets.SENTRY_LOG_LEVEL }}
+          SENTRY_LOG_LEVEL: debug
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_URL: ${{ secrets.SENTRY_URL }}
-          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_URL: https://sentry.kelp.digital
+          SENTRY_ORG: kelp
           SENTRY_RELEASE_VERSION: ${{inputs.env}}-${{github.sha}}
           SENTRY_PROJECT: woss-photo
           NODE_ENV: ${{inputs.env}}
-        run: pnpm sentry
+        run: pnpm sentry-upload
 
       - name: Upload woss-photo to Macula
         env:
