@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { maculaInstance } from '$src/appStore';
-  import type { Me } from '$src/maculaApi';
+  import { maculaInstance } from '$lib/appStore';
+  import type { Me } from '$lib/maculaApi';
   import type { Static } from '@sinclair/typebox';
   import { fade } from 'svelte/transition';
 

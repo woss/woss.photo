@@ -60,7 +60,8 @@
     "tailwindcss",
     "transpiling",
     "Unilink",
-    "WAAT"
+    "WAAT",
+    "woss"
   ],
   "workbench.colorCustomizations": {
     "titleBar.activeBackground": "#36c2bb",

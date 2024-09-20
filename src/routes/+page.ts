@@ -1,4 +1,4 @@
-import { maculaInstance } from '$src/appStore';
+import { maculaInstance } from '$lib/appStore.js';
 import { error } from '@sveltejs/kit';
 import { isEmpty, isNil } from 'ramda';
 

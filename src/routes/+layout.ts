@@ -1,4 +1,4 @@
-import { maculaInstance } from '$src/appStore.js';
+import { maculaInstance } from '$lib/appStore.js';
 
 export const ssr = true;
 export const csr = true;

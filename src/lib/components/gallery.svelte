@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { UnilinkCacheItem } from '$src/maculaApi';
+  import type { UnilinkCacheItem } from '$lib/maculaApi';
   import GalleryItem from './galleryItem.svelte';
   export let name: string;
   export let items: UnilinkCacheItem[] = [];

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import { maculaInstance } from '$src/appStore';
+  import { maculaInstance } from '$lib/appStore';
   import { fade } from 'svelte/transition';
   import type { PageData } from './$types';
 
