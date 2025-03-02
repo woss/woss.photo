@@ -24,12 +24,15 @@
   <div
     bind:clientHeight={containerHeight}
     bind:clientWidth={containerWidth}
-    class="container mx-auto mt-4 flex items-start w-full justify-between gap-2"
+    class="container mx-auto mt-4 flex items-start w-full justify-between gap-2 flex-col md:flex-row p-4 md:p-0"
   >
     <!-- image -->
     <div class="w-full">
       <div class="flex items-center justify-center">
-        <div style={data.info.imageOrientation === 'vertical' ? 'max-height=80vh; height:80vh;' : ''}>
+        <div
+          class="rounded-lg overflow-auto"
+          style={data.info.imageOrientation === 'vertical' ? 'max-height=80vh; height:80vh;' : ''}
+        >
           <img
             srcset="{src}?preset=sys_md 800w, {src}?preset=sys_xl 1000w"
             sizes="(min-width: 800px) 80vw, 100vw"

@@ -1,22 +1,12 @@
 name: deploy-to-macula
 on:
-  workflow_dispatch:
-    inputs:
-      env:
-        description: 'To which env to deploy. This equals the NODE_ENV variable.'
-        type: choice
-        default: 'staging'
-        required: true
-        options:
-          - staging
-          - production
+  push:
+    branches:
+      - main
 jobs:
   build:
     name: build and deploy
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [22.x]
     env:
       NODE_NO_WARNINGS: 1
       BROWSERSLIST_IGNORE_OLD_DATA: 1
@@ -26,18 +16,19 @@ jobs:
           lfs: true
           fetch-depth: 0
 
-      - run: corepack enable
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
 
       - name: Download ipfsCli
         run: |
-          echo "Downloading anagolay ipfs CLI which works with the ipfsAuthProxy."
+          echo "Downloading anagolay ipfs CLI which works with the ipfsAuthProxy"
           curl https://ipfs.macula.link/ipfs/bafybeig634knkl57gqgkmh3fti6zxisfcd47swetf5lastcx2waboa4a4a  > /usr/local/bin/ipfsCli
           chmod +x /usr/local/bin/ipfsCli
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 22
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 22
           cache: 'pnpm'
 
       - name: Pnpm Install
@@ -45,8 +36,8 @@ jobs:
 
       - name: Build App
         env:
-          VITE_SENTRY_RELEASE_VERSION: ${{inputs.env}}-${{github.sha}}
-          NODE_ENV: ${{inputs.env}}
+          VITE_SENTRY_RELEASE_VERSION: production-${{github.sha}}
+          NODE_ENV: production
         run: pnpm build
 
       - name: Upload Source Maps to Sentry
@@ -55,9 +46,9 @@ jobs:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_URL: https://sentry.kelp.digital
           SENTRY_ORG: kelp
-          SENTRY_RELEASE_VERSION: ${{inputs.env}}-${{github.sha}}
+          SENTRY_RELEASE_VERSION: production-${{github.sha}}
           SENTRY_PROJECT: woss-photo
-          NODE_ENV: ${{inputs.env}}
+          NODE_ENV: production
         run: pnpm sentry-upload
 
       - name: Upload woss-photo to Macula
@@ -93,11 +84,7 @@ jobs:
 
             let hostingUrl = '';
 
-            if('${{inputs.env}}' === 'production') {
-              hostingUrl = 'https://api.macula.link/hosting';
-            } else {
-              hostingUrl = 'https://api.stg.macula.link/hosting';
-            }
+            hostingUrl = 'https://api.macula.link/hosting';
 
             let pkgSlug = 'woss-photo';
 

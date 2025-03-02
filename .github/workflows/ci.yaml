@@ -11,9 +11,6 @@ jobs:
   build:
     name: build and deploy
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [22.x]
     env:
       NODE_NO_WARNINGS: 1
       BROWSERSLIST_IGNORE_OLD_DATA: 1
@@ -23,12 +20,13 @@ jobs:
           lfs: true
           fetch-depth: 0
 
-      - run: corepack enable
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 22
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 22
           cache: 'pnpm'
 
       - name: Pnpm Install
