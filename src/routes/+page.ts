@@ -1,4 +1,4 @@
-import { maculaInstance } from '$src/appStore';
+import { maculaInstance } from '$lib/appStore.js';
 import { error } from '@sveltejs/kit';
 import { isEmpty, isNil } from 'ramda';
 
@@ -10,7 +10,6 @@ export async function load({ fetch, parent }) {
 
   const take = 20;
   let photos = [];
-
   // we want only use one directory
   const wossPublishedDir = dirs.find((dir) => dir.name === 'woss-photo');
   if (isNil(wossPublishedDir)) {

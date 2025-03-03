@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { maculaInstance } from '$src/appStore';
-  import type { UnilinkCacheItem } from '$src/maculaApi';
+  import { maculaInstance } from '$lib/appStore';
+  import type { UnilinkCacheItem } from '$lib/maculaApi';
   import dayjs from 'dayjs';
   import { onMount } from 'svelte';
 

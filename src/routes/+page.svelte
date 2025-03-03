@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { maculaInstance } from '$src/appStore';
-  import Gallery from '$src/components/gallery.svelte';
-  import Navbar from '$src/components/navbar.svelte';
-  import { infiniteScroll } from '$src/lib/infiniteScroll';
-  import type { UnilinkCacheItem } from '$src/maculaApi';
+  import { maculaInstance } from '$lib/appStore';
+  import Gallery from '$lib/components/gallery.svelte';
+  import Navbar from '$lib/components/navbar.svelte';
+  import { infiniteScroll } from '$lib/infiniteScroll';
+  import type { UnilinkCacheItem } from '$lib/maculaApi';
   import { captureException } from '@sentry/browser';
   import { isNil } from 'ramda';
   import { onMount } from 'svelte';

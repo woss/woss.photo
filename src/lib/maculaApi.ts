@@ -233,7 +233,7 @@ export const meResponse = Type.Object({
   dirs: Type.Array(Dir)
 });
 
-const genericMeResponse = GenericDataResponse(meResponse);
+const genericMeResponse = meResponse;
 
 export class MaculaPublicApi {
   username: string;
@@ -293,7 +293,7 @@ export class MaculaPublicApi {
     } else {
       res = await fetch(this.userJSONUrl);
     }
-    const { data } = (await res.json()) as Static<typeof genericMeResponse>;
+    const data = (await res.json()) as Static<typeof genericMeResponse>;
     return data;
   }
   /**
@@ -342,7 +342,7 @@ export class MaculaPublicApi {
 
     const url = new URL(`${this.userBaseUrl}/${pathCid}`);
 
-    url.searchParams.set('show', 'photos');
+    url.searchParams.set('show', 'images');
 
     if (take) {
       url.searchParams.set('take', take.toString());
@@ -360,8 +360,9 @@ export class MaculaPublicApi {
       const data = await res.json();
       return data;
     } else {
-      const text = await res.text();
-      throw new Error(text);
+      const text = await res.json();
+      console.log('text', text);
+      throw new Error(text.message);
     }
   }
 

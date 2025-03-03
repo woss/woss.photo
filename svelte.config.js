@@ -13,8 +13,7 @@ const config = {
   kit: {
     adapter: adapter({
       fallback: '200.html',
-      precompress: true,
-      strict: false
+      precompress: true
     }),
     prerender: {
       // delete this line when Pricing page is ready
