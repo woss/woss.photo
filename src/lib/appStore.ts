@@ -12,4 +12,4 @@ export const licensesList = {
   'cc-0': 'Public domain (CC0)'
 };
 
-export const maculaInstance = new MaculaPublicApi('woss');
+export const maculaInstance = new MaculaPublicApi('woss', 'http://localhost:3007');

@@ -7,6 +7,7 @@ export const trailingSlash = 'always';
 
 export async function load({ fetch }) {
   const res = await maculaInstance.me(fetch);
+  // console.log('Layout load - macula.me()', res);
 
   return res;
 }

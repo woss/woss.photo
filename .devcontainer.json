@@ -1,0 +1,13 @@
+{
+    "image": "mcr.microsoft.com/devcontainers/javascript-node",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "1YiB.svelte-bundle"
+            ]
+        }
+    },
+    "runArgs": [
+        "--add-host=host.docker.internal:host-gateway"
+    ]
+}

@@ -20,6 +20,7 @@ logger.warn = (msg, options) => {
 const config: UserConfig = {
   customLogger: logger,
   // logLevel: 'info',
+
   plugins: [
     topLevelAwait(),
     // sentrySvelteKit({
@@ -65,6 +66,9 @@ const config: UserConfig = {
     }
   },
   server: {
+    host: true,
+    hmr: true,
+    port: 1122,
     fs: {
       allow: [resolve('../../../src')],
       strict: false
