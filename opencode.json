@@ -14,13 +14,13 @@
       ],
       "enabled": true
     },
-    "unilink-mcp": {
+    "macula-mcp": {
       "type": "remote",
       "url": "http://localhost:3007/mcp",
       "enabled": true
     }
   },
   "tools": {
-    "gitbutler_*": true // Disabled globally, will enable per-agent
+    "gitbutler_*": true
   }
 }

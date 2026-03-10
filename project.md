@@ -1,0 +1,3 @@
+# Modern photo gallery using Macula as a source of the images
+
+Build a modern photo portfolio/gallery. Use the Macula MCP as a source of the images, and build a beautiful, performant frontend to display them. Use SvelteKit, Tailwind CSS, and TypeScript for the frontend. Integrate with the MCP to fetch and display photos, and implement features like filtering, searching, and pagination. You as an agent are querying the mcp understanding the structure and then using the api endpoints provided by macula to fetch the data and display it in a nice way.

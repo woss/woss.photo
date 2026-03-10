@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "skills": {
+    "pnpm": {
+      "source": "antfu/skills",
+      "sourceType": "github",
+      "computedHash": "318f9fca2441a3e06fedc336e195dd18be5dbe901064e4fa71b76b40b096ab3a"
+    },
+    "svelte-code-writer": {
+      "source": "sveltejs/mcp",
+      "sourceType": "github",
+      "computedHash": "c0e2cce9855f8e312cbb0a05aef164b4659c672d7723e4e598ffa6bc94890542"
+    },
+    "sveltekit-best-practices": {
+      "source": "ofershap/sveltekit-best-practices",
+      "sourceType": "github",
+      "computedHash": "febd7992d4bd2ad1de26ff9d4e76da264cc1d14e13ac0945f66015bfc08152aa"
+    },
+    "sveltekit-svelte5-tailwind-skill": {
+      "source": "claude-skills/sveltekit-svelte5-tailwind-skill",
+      "sourceType": "github",
+      "computedHash": "bb72a52a2c415aa8743bf3146dd615f9084e17a8a05e2198f8c3ba23a8053b8b"
+    }
+  }
+}
