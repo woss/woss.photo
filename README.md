@@ -1,1 +1,0 @@
-Woss.photo portfolio
